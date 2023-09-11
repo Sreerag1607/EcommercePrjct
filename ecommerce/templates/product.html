@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+        {{product.desc|truncatewords:155}}
+{% endblock %}
+
+{% block title %}
+    {% if product %}
+        {{product.name}} - BUY & USE
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row mb-3">
+    <div class="pt-3">
+        <p style="color:#000000;"><a style="color:#000000;" href="{% url 'shop:allProdCat' %}">HOME</a> | <a style="color:#000000;" href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
+    </div>
+</div>
+<div class="container-fluid">
+<div class="row mb-3">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 text-center">
+
+                <div style="min-width:18rem;">
+                    <img class="my_image" src="{{product.img.url}}" alt="{{product.name}}">
+                </div>
+
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6  shadow pt-3 pb-3 ">
+
+                <h1 class="my_title" style="font-size:40px;">{{product.name}}</h1>
+                <p>INR {{product.price}}</p>
+                <p style="font-size:20px;"><b>Product Description</b></p>
+                <p>{{product.desc}}</p>
+                {% if product.stock <= 0 %}
+                    <p><b>OUT OF STOCK</b></p>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url 'cart:add_cart' product.id %}">ADD TO CART</a>
+                {% endif %}
+
+        </div>
+</div>
+</div>
+{% endblock %}
